@@ -165,9 +165,10 @@ body {
 }
 
 .loginbtn {
-    background-color: white;
+    text-decoration: none;
+    background-color: green;
     border-radius: 21px;
-    color: black;
+    color: white;
     padding: 10px;
     width: 79px;
     cursor: pointer;
