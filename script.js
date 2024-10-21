@@ -29,7 +29,7 @@ signupBtn.addEventListener('click', () => {
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
 
-    alert('Account created successfully! Redirecting to login...');
+    /*alert('Account created successfully! Redirecting to login...');*/
     container.classList.remove("active"); // Go back to login
   } else {
     alert('Please fill in all fields.');
@@ -47,7 +47,7 @@ loginBtnAction.addEventListener('click', () => {
   const user = storedUsers.find(user => user.email === email);
 
   if (user && user.password === password) {
-    alert('Login successful! Redirecting to your account...');
+    /*alert('Login successful! Redirecting to your account...');*/
     window.location.href = "ad.html"; // Change to your target page
   } else if (!user) {
     alert('Email not registered, redirecting to sign-up page.');
