@@ -1,3 +1,7 @@
+## Music app
+
+![Screenshot (15)](https://github.com/user-attachments/assets/d32e8354-694e-4917-b5fb-31561761f6c4)
+
 ## File Stracture 
 
 ```go
@@ -275,7 +279,8 @@ main();
 
 ```
 
-![Screenshot (15)](https://github.com/user-attachments/assets/d32e8354-694e-4917-b5fb-31561761f6c4)
+![image](https://github.com/user-attachments/assets/76d4e756-e3c8-401d-81a0-c92dcc6f880b)
+
 
 `In local development (especially when using tools like Live Server), the server environment handles requests differently compared to static hosting platforms like GitHub Pages or Netlify. Here's why:`
 
