@@ -294,3 +294,63 @@ The 404 errors you're seeing when you upload to GitHub or Netlify indicate that 
 | --- | --- | --- |
 
 ### Solution : Some changes in `js/script.js`
+
+---
+
+### CORS (Cross-Origin Resource Sharing) policies.
+
+SomeTime error encountering is related to **CORS (Cross-Origin Resource Sharing)** policies. Specifically, it indicates that your browser is blocking the request to load resources from the `songs` directory hosted on your InfinityFree server because no `Access-Control-Allow-Origin` header is present in the response. This is a common issue when you're making requests between different domains or even within subdomains that are treated differently by the browser.
+
+### Key Issues:
+1. **CORS Policy Error**: The server hosting your site (`http://music-app-project.kesug.com`) is not configured to allow cross-origin requests from your frontend. This typically happens when trying to fetch resources from a server that is either blocking such requests or is not set up to explicitly allow them.
+
+2. **403 Error (Forbidden)**: This indicates that the server is actively refusing the request, possibly because of permissions settings on the server, incorrect paths, or other security configurations that prevent fetching resources.
+
+### Possible Solutions:
+
+#### 1. **Update Server CORS Policy**:
+If you have access to server configurations (like `.htaccess` in Apache, or if you're able to modify server headers), you can explicitly allow cross-origin requests by adding the following to your `.htaccess` file or server config:
+
+```apache
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</IfModule>
+```
+
+This will allow all origins (`*`) to make requests to your server. However, this is not ideal for security, so you may want to restrict it to specific origins.
+
+#### 2. **Use `no-cors` Mode in Fetch Requests**:
+You can bypass the CORS policy by setting the `mode: 'no-cors'` in your `fetch` requests. However, this mode limits the types of requests you can make and doesn't allow access to the response data (you get an "opaque" response).
+
+Update your `fetch` calls like this:
+
+```javascript
+let response = await fetch(`/songs/`, {
+    mode: 'no-cors'
+});
+```
+
+However, this might not work as expected, especially if you're fetching dynamic content like JSON or HTML, because the response data will be blocked.
+
+#### 3. **Ensure Correct File Permissions**:
+Make sure that the files and directories you're trying to access on your InfinityFree server have the correct permissions. A `403 Forbidden` error can also happen if the server denies access due to incorrect file permissions.
+
+On InfinityFree, ensure:
+- **File permissions**: Ensure your directories and files are accessible. Typically, directories should have `755` permissions and files should have `644` permissions.
+  
+#### 4. **Check Server Path or URL Issues**:
+The error indicates that it's trying to fetch `http://music-app-project.kesug.com/songs/`, which returns a `403`. Ensure that:
+- The path `/songs/` is correct and publicly accessible.
+- You have correctly uploaded your files to the right location on the server.
+
+#### 5. **Test with a Local Server**:
+Before deploying on InfinityFree, you can test your app locally using a simple HTTP server. For example, you can run:
+```bash
+npx serve .
+```
+This will serve your static files and ensure that paths and requests are functioning properly without CORS issues.
+
+### Conclusion:
+The CORS issue you're facing stems from server-side restrictions. If you can modify server settings, you should allow CORS requests by updating the `.htaccess` file or configuring the server. If that's not possible on InfinityFree, you may need to look for a hosting service that allows better control over CORS headers.
