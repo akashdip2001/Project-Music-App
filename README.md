@@ -285,7 +285,7 @@ The 404 errors you're seeing when you upload to GitHub or Netlify indicate that 
 
 ### Problems : Deploys
 
-| ### [GitHub pg](https://akashdip2001.github.io/Project-Music-App/) | ### [netlify.app](https://project-music-app.netlify.app/ad.html) | ### [vercel.com](https://vercel.com/api/toolbar/link/project-music-jm6djeg3g-akashdip-mahapatras-projects.vercel.app?via=deployment-visit-button&p=1&page=/) |
+| [GitHub pg](https://akashdip2001.github.io/Project-Music-App/) | [netlify.app](https://project-music-app.netlify.app/ad.html) | [vercel.com](https://vercel.com/api/toolbar/link/project-music-jm6djeg3g-akashdip-mahapatras-projects.vercel.app?via=deployment-visit-button&p=1&page=/) |
 | --- | --- | --- |
 
 ### Solution : Some changes in `js/script.js`
