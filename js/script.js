@@ -84,39 +84,45 @@ const playMusic = (track, pause = false) => {
 
 
 async function displayAlbums() {
-    console.log("displaying albums");
+  console.log("displaying albums");
 
-    try {
-        // Use a relative path for fetching the songs directory
-        let response = await fetch('songs/');
-        let htmlText = await response.text();
+  try {
+    let response = await fetch(`/songs/`); // Fetch the songs directory
+    let htmlText = await response.text(); // Parse it as text
 
-        let div = document.createElement("div");
-        div.innerHTML = htmlText;
-        let anchors = div.getElementsByTagName("a");
-        let cardContainer = document.querySelector(".cardContainer");
+    let div = document.createElement("div");
+    div.innerHTML = htmlText;
+    let anchors = div.getElementsByTagName("a");
+    let cardContainer = document.querySelector(".cardContainer");
 
-        cardContainer.innerHTML = '';
+    // Clear the card container before displaying new albums
+    cardContainer.innerHTML = "";
 
-        for (let index = 0; index < anchors.length; index++) {
-            const anchor = anchors[index];
+    for (let index = 0; index < anchors.length; index++) {
+      const anchor = anchors[index];
 
-            if (anchor.href.includes("songs/") && !anchor.href.includes(".htaccess")) {
-                let folder = anchor.href.split("/").filter(Boolean).slice(-1)[0];
+      // Make sure it's a valid folder, not a file or root reference
+      if (
+        anchor.href.includes("/songs/") &&
+        !anchor.href.includes(".htaccess")
+      ) {
+        let folder = anchor.href.split("/").filter(Boolean).slice(-1)[0]; // Extract correct folder name
 
-                if (!folder) {
-                    console.error("Invalid folder path:", anchor.href);
-                    continue;
-                }
+        if (!folder) {
+          console.error("Invalid folder path:", anchor.href);
+          continue; // Skip if folder is invalid
+        }
 
-                try {
-                    // Use relative paths for fetching album info
-                    let albumInfo = await fetch(`songs/${folder}/info.json`);
-                    if (!albumInfo.ok) throw new Error(`Error fetching info.json for folder: ${folder}`);
+        // Try to fetch the album's metadata from info.json
+        try {
+          let albumInfo = await fetch(`/songs/${folder}/info.json`);
+          if (!albumInfo.ok)
+            throw new Error(`Error fetching info.json for folder: ${folder}`);
 
-                    let albumData = await albumInfo.json();
+          let albumData = await albumInfo.json();
 
-                    cardContainer.innerHTML += `
+          // Create album card with metadata
+          cardContainer.innerHTML += `
                     <div data-folder="${folder}" class="card">
                         <div class="play">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -125,20 +131,28 @@ async function displayAlbums() {
                                     stroke-linejoin="round" />
                             </svg>
                         </div>
-                        <img src="songs/${folder}/cover.jpg" alt="Album cover">
+                        <img src="/songs/${folder}/cover.jpg" alt="Album cover">
                         <h2>${albumData.title}</h2>
                         <p>${albumData.description}</p>
                     </div>`;
-                } catch (err) {
-                    console.error("Error fetching album info:", err);
-                }
-            }
+        } catch (err) {
+          console.error("Error fetching album info:", err);
         }
-    } catch (error) {
-        console.error("Error displaying albums:", error);
+      }
     }
-}
 
+    // Add click event listeners to each card to load the playlist
+    Array.from(document.getElementsByClassName("card")).forEach((card) => {
+      card.addEventListener("click", async (event) => {
+        let folderName = `songs/${event.currentTarget.dataset.folder}`;
+        let songs = await getSongs(folderName);
+        playMusic(songs[0]); // Play the first song when an album is clicked
+      });
+    });
+  } catch (error) {
+    console.error("Error displaying albums:", error);
+  }
+}
 
 
 
