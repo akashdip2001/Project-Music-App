@@ -312,10 +312,18 @@ SomeTime error encountering is related to **CORS (Cross-Origin Resource Sharing)
 If you have access to server configurations (like `.htaccess` in Apache, or if you're able to modify server headers), you can explicitly allow cross-origin requests by adding the following to your `.htaccess` file or server config:
 
 ```apache
+# Allow cross-origin requests from any origin (for development only)
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"
     Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
-    Header set Access-Control-Allow-Headers "Content-Type"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+
+# Handle Options preflight requests for CORS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
 </IfModule>
 ```
 
@@ -354,3 +362,11 @@ This will serve your static files and ensure that paths and requests are functio
 
 ### Conclusion:
 The CORS issue you're facing stems from server-side restrictions. If you can modify server settings, you should allow CORS requests by updating the `.htaccess` file or configuring the server. If that's not possible on InfinityFree, you may need to look for a hosting service that allows better control over CORS headers.
+
+### If CORS Issue Persists:
+If adding the `.htaccess` file doesn’t resolve the issue, InfinityFree might not allow users to set custom headers like `Access-Control-Allow-Origin`. In that case, you might need to switch to a different hosting provider that offers more flexibility, such as:
+- **Vercel** (for serverless hosting)
+- **Netlify** (for static sites)
+- **Heroku** (for dynamic applications)
+
+These platforms are better equipped for handling modern web app needs, including proper CORS handling.
