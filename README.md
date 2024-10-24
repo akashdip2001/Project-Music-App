@@ -373,5 +373,10 @@ These platforms are better equipped for handling modern web app needs, including
 
 ---
 
-Finally sucessfully Hosting at [Website](https://webhostmost.com/)
-WebSite Link : http://melotune.freewebhostmost.com
+Finally sucessfully Hosting at [Website](https://webhostmost.com/) </br>
+WebSite Link : http://melotune.freewebhostmost.com </br>
+
+<img src="https://github.com/akashdip2001/college-final-year-project/blob/main/img/colour_line.png" >
+
+<h3 align="right">Adarsha Ghosh</h3>
+<h4 align="right">last update: 24/10/2024</h4> 
