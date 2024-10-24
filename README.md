@@ -1,4 +1,4 @@
-## Music app
+## Music app [Live](http://melotune.freewebhostmost.com)
 
 ![Screenshot (15)](https://github.com/user-attachments/assets/d32e8354-694e-4917-b5fb-31561761f6c4)
 
@@ -370,3 +370,13 @@ If adding the `.htaccess` file doesn’t resolve the issue, InfinityFree might n
 - **Heroku** (for dynamic applications)
 
 These platforms are better equipped for handling modern web app needs, including proper CORS handling.
+
+---
+
+Finally sucessfully Hosting at [Website](https://webhostmost.com/) </br>
+WebSite Link : http://melotune.freewebhostmost.com </br>
+
+<img src="https://github.com/akashdip2001/college-final-year-project/blob/main/img/colour_line.png" >
+
+<h3 align="right">Adarsha Ghosh</h3>
+<h4 align="right">last update: 24/10/2024</h4> 
